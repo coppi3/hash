@@ -69,19 +69,19 @@ impl HHashMap {
         range: Range<usize>,
         hashes: Arc<Mutex<HHashMap>>,
     ) {
-        loop {
-            for n in range.clone().into_iter() {
-                let digest = digest(n.to_string());
-                let t = &digest[digest.len() - number..];
-                if t == "0".repeat(number) {
-                    let mut hashes = hashes.lock().unwrap();
-                    if hashes.len() == frequency {
-                        _ = tx.send(());
-                    } else {
-                        hashes.insert(n, digest);
-                    }
-                };
-            }
+        for n in range.clone().into_iter() {
+            let digest = digest(n.to_string());
+            let t = &digest[digest.len() - number..];
+            if t == "0".repeat(number) {
+                let mut hashes = hashes.lock().unwrap();
+                if hashes.len() == frequency {
+                    _ = tx.send(());
+                    return;
+                } else {
+                    hashes.insert(n, digest);
+                    continue;
+                }
+            };
         }
     }
 }
