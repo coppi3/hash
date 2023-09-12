@@ -12,7 +12,7 @@ struct Cli {
     #[arg(short = 'F', long)]
     frequency: usize,
     // Number of workers
-    #[arg(short = 'W', long)]
+    #[arg(short = 'W', long, default_value_t = 1)]
     workers: usize,
 }
 
