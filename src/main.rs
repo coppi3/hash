@@ -24,7 +24,7 @@ fn main() {
         cli.number, cli.frequency, cli.workers
     );
 
-    let mut found_hashes = HHashMap::default();
+    let mut found_hashes = HHashMap::with_capacity(cli.frequency);
     found_hashes.hash_gen(cli.number, cli.frequency, cli.workers);
     for (n, hash) in &found_hashes {
         println!("{}, {}", n, hash);
